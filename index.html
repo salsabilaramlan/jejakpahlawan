@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jejak Pahlawan VR - Maklum Balas & Analisis</title>
+    <!-- Tailwind CSS untuk gaya yang moden dan responsif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js untuk paparan graf analisis -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .tab-active {
+            border-bottom: 4px solid #4f46e5;
+            color: #4f46e5;
+            font-weight: 600;
+        }
+        /* Styling untuk radio button skala likert supaya nampak kemas */
+        .likert-radio:checked + label {
+            background-color: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4f46e5;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Sembunyikan scrollbar untuk carta pada peranti mudah alih */
+        .chart-container::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header Utama -->
+    <header class="bg-indigo-700 text-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-center md:text-left mb-4 md:mb-0">
+                    <h1 class="text-2xl md:text-3xl font-bold"><i class="fa-solid fa-vr-cardboard mr-2"></i> Jejak Pahlawan VR</h1>
+                    <p class="text-indigo-200 mt-1">Inovasi WebXR Sejarah Tahun 5. Teroka, Kenali, Hayati.</p>
+                </div>
+                <div>
+                    <span class="bg-indigo-800 px-4 py-2 rounded-full text-sm font-medium border border-indigo-600">
+                        <i class="fa-solid fa-graduation-cap mr-1"></i> SK Satu Sultan Alam Shah
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigasi Tab -->
+    <div class="bg-white shadow">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex border-b border-gray-200">
+                <button onclick="switchTab('form')" id="tab-form" class="py-4 px-6 focus:outline-none tab-active hover:text-indigo-600 transition-colors">
+                    <i class="fa-solid fa-clipboard-list mr-2"></i> Isi Maklum Balas
+                </button>
+                <button onclick="switchTab('analytics')" id="tab-analytics" class="py-4 px-6 text-gray-500 focus:outline-none hover:text-indigo-600 transition-colors">
+                    <i class="fa-solid fa-chart-pie mr-2"></i> Analisis Data
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+
+        <!-- BAHAGIAN 1: BORANG MAKLUM BALAS -->
+        <section id="section-form" class="block">
+            <div class="bg-white rounded-xl shadow-md p-6 md:p-8">
+                <div class="mb-8 border-l-4 border-indigo-500 pl-4 bg-indigo-50 p-4 rounded-r-lg">
+                    <h2 class="text-xl font-bold text-indigo-800 mb-2">Borang Penilaian Guru</h2>
+                    <p class="text-gray-600 text-sm">Cuba Jejak Pahlawan VR di pautan <a href="https://jejak-pahlawan.netlify.app" target="_blank" class="text-indigo-600 font-semibold hover:underline">jejak-pahlawan.netlify.app</a>, kemudian tandakan satu jawapan bagi setiap pernyataan di bawah. Maklum balas cikgu amat penting untuk kami.</p>
+                </div>
+
+                <form id="feedbackForm" onsubmit="submitForm(event)">
+                    
+                    <!-- Maklumat Asas -->
+                    <h3 class="text-lg font-bold text-gray-800 border-b pb-2 mb-4"><i class="fa-solid fa-user-circle mr-2 text-indigo-500"></i>Maklumat Diri</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nama (Pilihan)</label>
+                            <input type="text" id="nama" name="nama" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" placeholder="Contoh: Ahmad bin Abu">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">E-mel (Wajib)</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" placeholder="Contoh: guru@moe-dl.edu.my">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Sekolah / Organisasi</label>
+                            <input type="text" id="sekolah" name="sekolah" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" placeholder="Nama sekolah anda">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Jawatan / Opsyen</label>
+                            <input type="text" id="jawatan" name="jawatan" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" placeholder="Contoh: Guru Sejarah Tahun 5">
+                        </div>
+                    </div>
+
+                    <!-- Skala Likert -->
+                    <h3 class="text-lg font-bold text-gray-800 border-b pb-2 mb-4"><i class="fa-solid fa-star mr-2 text-indigo-500"></i>Penilaian Produk</h3>
+                    <p class="text-sm text-gray-500 mb-6 italic">Skala: 1 (Sangat Tidak Setuju) ➡ 5 (Sangat Setuju)</p>
+                    
+                    <div class="space-y-6 mb-8" id="likert-container">
+                        <!-- Soalan akan dijana oleh JavaScript untuk kod yang lebih bersih -->
+                    </div>
+
+                    <!-- Bahagian Maklum Balas Lanjut -->
+                    <h3 class="text-lg font-bold text-gray-800 border-b pb-2 mb-4"><i class="fa-solid fa-comment-dots mr-2 text-indigo-500"></i>Kesesuaian & Ulasan Lanjut</h3>
+                    <div class="grid grid-cols-1 gap-6 mb-8">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Kaedah capaian paling sesuai untuk sekolah cikgu:</label>
+                            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                                <label class="flex items-center space-x-2 cursor-pointer p-3 border rounded-lg hover:bg-gray-50 flex-1">
+                                    <input type="radio" name="capaian" value="Komputer/LCD" required class="text-indigo-600 focus:ring-indigo-500 w-4 h-4">
+                                    <span class="text-sm">Komputer/LCD</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer p-3 border rounded-lg hover:bg-gray-50 flex-1">
+                                    <input type="radio" name="capaian" value="Telefon + Cardboard" class="text-indigo-600 focus:ring-indigo-500 w-4 h-4">
+                                    <span class="text-sm">Telefon + Cardboard/VRG</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer p-3 border rounded-lg hover:bg-gray-50 flex-1">
+                                    <input type="radio" name="capaian" value="PICO/WebXR" class="text-indigo-600 focus:ring-indigo-500 w-4 h-4">
+                                    <span class="text-sm">PICO/Set Kepala WebXR</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Adakah cikgu akan menggunakan produk ini?</label>
+                            <div class="flex space-x-4">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="penggunaan" value="Ya" required class="text-indigo-600 focus:ring-indigo-500 w-4 h-4">
+                                    <span>Ya</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="penggunaan" value="Mungkin" class="text-indigo-600 focus:ring-indigo-500 w-4 h-4">
+                                    <span>Mungkin</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="penggunaan" value="Belum" class="text-indigo-600 focus:ring-indigo-500 w-4 h-4">
+                                    <span>Belum</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Kekuatan utama produk:</label>
+                            <textarea name="kekuatan" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" placeholder="Apakah yang paling cikgu suka tentang produk ini?"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Cadangan penambahbaikan:</label>
+                            <textarea name="cadangan" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" placeholder="Apa yang boleh kami baiki?"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex items-center justify-between border-t pt-6">
+                        <p class="text-sm text-gray-500"><i class="fa-solid fa-lock mr-1"></i> Data akan dihantar ke Google Sheets secara selamat.</p>
+                        <button type="submit" id="submitBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all flex items-center">
+                            <span id="btnText">Hantar Maklum Balas</span>
+                            <div id="btnLoader" class="loader ml-3 hidden"></div>
+                        </button>
+                    </div>
+                    
+                    <!-- Mesej Berjaya -->
+                    <div id="successMessage" class="hidden mt-6 bg-green-50 border border-green-200 text-green-800 px-6 py-5 rounded-xl shadow-sm relative transition-all" role="alert">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-circle-check text-green-500 text-2xl"></i>
+                            </div>
+                            <div class="ml-4 w-full">
+                                <h3 class="text-lg font-bold text-green-800">Penyertaan Berjaya Direkodkan!</h3>
+                                <p class="mt-1 text-sm text-green-700">Maklum balas cikgu telah direkodkan ke dalam sistem dan Google Sheets. Jutaan terima kasih atas masa dan sokongan cikgu.</p>
+
+                                <div class="mt-4 pt-4 border-t border-green-200">
+                                    <button type="button" onclick="resetForm()" class="text-sm bg-green-100 hover:bg-green-200 text-green-800 py-1.5 px-4 rounded inline-block font-semibold transition-colors">Isi Borang Baru</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mesej Ralat -->
+                    <div id="errorMessage" class="hidden mt-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative" role="alert">
+                        <strong class="font-bold"><i class="fa-solid fa-exclamation-circle mr-1"></i> Ralat:</strong>
+                        <span class="block sm:inline" id="errorText">Gagal menghantar data. Sila pastikan sambungan internet anda stabil.</span>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
+        <!-- BAHAGIAN 2: PAPAN PEMUKA ANALISIS -->
+        <section id="section-analytics" class="hidden">
+            <div class="mb-6 flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-gray-800">Ringkasan Analisis Data</h2>
+                <button onclick="refreshCharts()" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm hover:bg-gray-50 transition-colors shadow-sm">
+                    <i class="fa-solid fa-sync-alt mr-1"></i> Segar Semula
+                </button>
+            </div>
+
+            <!-- Kad Info Ringkas -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-blue-500">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-blue-100 text-blue-600 mr-4">
+                            <i class="fa-solid fa-users fa-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 font-medium">Jumlah Responden</p>
+                            <p class="text-3xl font-bold text-gray-800" id="stat-total">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-green-500">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
+                            <i class="fa-solid fa-star fa-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 font-medium">Purata Penilaian Keseluruhan</p>
+                            <p class="text-3xl font-bold text-gray-800" id="stat-average">0.0 <span class="text-lg text-gray-400 font-normal">/ 5.0</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-purple-500">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
+                            <i class="fa-solid fa-heart fa-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 font-medium">Peratusan Akan Guna</p>
+                            <p class="text-3xl font-bold text-gray-800" id="stat-willuse">0%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carta Utama -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Purata Skor Penilaian Mengikut Item</h3>
+                <div class="relative h-72 w-full chart-container">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Carta Tambahan (Pie) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Kaedah Capaian Sesuai</h3>
+                    <div class="relative h-64 w-full flex justify-center">
+                        <canvas id="pieChartAccess"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Minat Menggunakan Produk</h3>
+                    <div class="relative h-64 w-full flex justify-center">
+                        <canvas id="pieChartInterest"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // --- DATA MOCK (Untuk Paparan Awal Analisis supaya tidak kosong) ---
+        // Jika digunakan secara sebenar, data ini akan ditarik dari pangkalan data/Google Sheet.
+        // Untuk laman web mandiri ini, kita simpan dalam memori (array)
+        let mockSubmissions = [
+            { q1:5, q2:4, q3:5, q4:5, q5:4, q6:5, q7:4, q8:5, capaian: "PICO/WebXR", penggunaan: "Ya" },
+            { q1:4, q2:5, q3:4, q4:5, q5:3, q6:4, q7:5, q8:4, capaian: "Komputer/LCD", penggunaan: "Ya" },
+            { q1:5, q2:5, q3:5, q4:4, q5:5, q6:5, q7:4, q8:5, capaian: "Telefon + Cardboard", penggunaan: "Mungkin" },
+            { q1:3, q2:4, q3:4, q4:4, q5:2, q6:4, q7:3, q8:4, capaian: "Komputer/LCD", penggunaan: "Mungkin" }
+        ];
+
+        // Soalan Likert
+        const likertQuestions = [
+            "Laman mudah dibuka dan arahan penggunaan mudah difahami.",
+            "Peta Malaysia dan navigasi membantu saya memilih pejuang dengan jelas.",
+            "Panorama 360 darjah dan titik interaktif membantu memvisualisasikan konteks sejarah.",
+            "Kandungan sesuai serta menyokong DSKP Sejarah Tahun 5.",
+            "Penggunaan melalui komputer, telefon VR atau PICO meningkatkan kebolehcapaian produk.",
+            "Produk berpotensi meningkatkan minat dan penglibatan murid.",
+            "Produk sesuai digunakan dalam PdP secara individu, kumpulan atau seluruh kelas.",
+            "Saya berminat menggunakan atau berkongsi Jejak Pahlawan VR dengan guru lain."
+        ];
+
+        // --- PENJANAAN UI ---
+        
+        // Jana soalan likert secara dinamik supaya HTML bersih
+        const likertContainer = document.getElementById('likert-container');
+        likertQuestions.forEach((q, index) => {
+            const qNum = index + 1;
+            let optionsHTML = '';
+            // Susun atur flex untuk butang (lebih responsif)
+            for(let i=1; i<=5; i++) {
+                optionsHTML += `
+                    <div class="text-center">
+                        <input type="radio" id="q${qNum}_${i}" name="q${qNum}" value="${i}" required class="likert-radio hidden">
+                        <label for="q${qNum}_${i}" class="cursor-pointer inline-flex items-center justify-center w-10 h-10 border-2 border-gray-300 rounded-full font-bold text-gray-500 hover:border-indigo-400 transition-colors shadow-sm bg-white">
+                            ${i}
+                        </label>
+                    </div>
+                `;
+            }
+
+            likertContainer.innerHTML += `
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                    <p class="text-sm font-medium text-gray-800 mb-3"><span class="bg-indigo-600 text-white w-6 h-6 inline-flex justify-center items-center rounded-full text-xs mr-2">${qNum}</span> ${q}</p>
+                    <div class="flex justify-between sm:justify-start sm:space-x-6 max-w-md mx-auto sm:mx-0 px-2">
+                        ${optionsHTML}
+                    </div>
+                </div>
+            `;
+        });
+
+        // --- LOGIK TAB ---
+        function switchTab(tabId) {
+            // Sembunyi semua
+            document.getElementById('section-form').classList.add('hidden');
+            document.getElementById('section-analytics').classList.add('hidden');
+            
+            // Reset butang aktif
+            document.getElementById('tab-form').classList.remove('tab-active', 'text-indigo-600');
+            document.getElementById('tab-form').classList.add('text-gray-500');
+            document.getElementById('tab-analytics').classList.remove('tab-active', 'text-indigo-600');
+            document.getElementById('tab-analytics').classList.add('text-gray-500');
+            
+            // Tunjuk yang dipilih
+            document.getElementById('section-' + tabId).classList.remove('hidden');
+            document.getElementById('tab-' + tabId).classList.add('tab-active', 'text-indigo-600');
+            document.getElementById('tab-' + tabId).classList.remove('text-gray-500');
+
+            if(tabId === 'analytics') {
+                updateCharts();
+            }
+        }
+
+        // --- LOGIK GOOGLE APPS SCRIPT URL ---
+        const googleAppScriptURL = 'https://script.google.com/macros/s/AKfycbzz2yup37hB8GCTDe7lIAGXddA7eAvZl_-WW_k0f6wPJZNb3XynTcomoEecrJ2J0Hdryg/exec';
+
+        // --- LOGIK PENGHANTARAN BORANG ---
+        function submitForm(event) {
+            event.preventDefault(); // Halang halaman dari dimuat semula
+            
+            const form = document.getElementById('feedbackForm');
+            const btn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const loader = document.getElementById('btnLoader');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            // UI Loading state
+            btn.disabled = true;
+            btnText.innerText = "Menghantar...";
+            loader.classList.remove('hidden');
+            successMsg.classList.add('hidden');
+            errorMsg.classList.add('hidden');
+
+            // Ambil data dari form
+            const formData = new FormData(form);
+            const namaResponden = formData.get('nama') || '';
+            const sekolahResponden = formData.get('sekolah') || '';
+            
+            // 1. Simpan ke dalam array tempatan untuk update carta (Simulasi Analisis)
+            const localDataObj = {};
+            formData.forEach((value, key) => localDataObj[key] = isNaN(value) ? value : parseInt(value));
+            mockSubmissions.push(localDataObj);
+
+            // 2. Hantar ke Google Sheets jika URL telah ditetapkan
+            if (googleAppScriptURL && googleAppScriptURL.startsWith('https://script.google.com')) {
+                // Hantar form data sebagai x-www-form-urlencoded POST
+                fetch(googleAppScriptURL, {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors' // Penting untuk elak isu CORS dengan Google Script
+                })
+                .then(() => {
+                    // Berjaya
+                    finishSubmission(true, namaResponden, sekolahResponden);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    finishSubmission(false);
+                });
+            } else {
+                // Tiada URL setup, simulasi kejayaan (Data simpan di browser sahaja untuk chart)
+                setTimeout(() => {
+                    finishSubmission(true, namaResponden, sekolahResponden);
+                }, 1000);
+            }
+
+            function finishSubmission(isSuccess, nama, sekolah) {
+                btn.disabled = false;
+                btnText.innerText = "Hantar Maklum Balas";
+                loader.classList.add('hidden');
+
+                if (isSuccess) {
+                    successMsg.classList.remove('hidden');
+                    
+                    form.reset(); // Kosongkan borang
+                    // Update chart di latar belakang
+                    updateCharts(); 
+                } else {
+                    errorMsg.classList.remove('hidden');
+                }
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('successMessage').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- LOGIK ANALISIS & CHART.JS ---
+        let barChartInst, pieAccessInst, pieInterestInst;
+
+        async function updateCharts() {
+            let dataToProcess = mockSubmissions;
+            const refreshBtn = document.querySelector('button[onclick="refreshCharts()"] i');
+
+            // Jika URL Google Script telah disetkan, tarik data secara LIVE
+            if (googleAppScriptURL && googleAppScriptURL.startsWith('https://script.google.com')) {
+                try {
+                    // Tunjuk visual loading spinner
+                    if (refreshBtn) refreshBtn.classList.add('fa-spin');
+                    document.getElementById('stat-total').innerHTML = '<i class="fa-solid fa-spinner fa-spin text-gray-400"></i>';
+                    
+                    // Request data secara langsung dari Google Sheets
+                    const response = await fetch(googleAppScriptURL);
+                    const realData = await response.json();
+                    
+                    if (realData && Array.isArray(realData) && realData.length > 0) {
+                        dataToProcess = realData; // Gunakan data sebenar dari Sheet!
+                    }
+                } catch (error) {
+                    console.error("Gagal menarik data live:", error);
+                    // Jika gagal (sebab line tiada, dll), ia fallback guna data local dalam form
+                } finally {
+                    if (refreshBtn) refreshBtn.classList.remove('fa-spin');
+                }
+            }
+
+            const total = dataToProcess.length;
+            document.getElementById('stat-total').innerText = total;
+
+            if (total === 0) return;
+
+            // Kira Purata Keseluruhan
+            let sumAll = 0;
+            let qAverages = [0,0,0,0,0,0,0,0];
+            let accessCounts = {"Komputer/LCD": 0, "Telefon + Cardboard": 0, "PICO/WebXR": 0};
+            let interestCounts = {"Ya": 0, "Mungkin": 0, "Belum": 0};
+
+            dataToProcess.forEach(sub => {
+                for(let i=1; i<=8; i++) {
+                    // Boleh baca header huruf kecil (q1) atau besar (Q1)
+                    const val = parseInt(sub[`q${i}`] || sub[`Q${i}`]);
+                    if(val) {
+                        qAverages[i-1] += val;
+                        sumAll += val;
+                    }
+                }
+                
+                let capaianVal = sub.capaian || sub.Capaian;
+                if(capaianVal) {
+                    let capKey = capaianVal.includes("Telefon") ? "Telefon + Cardboard" : capaianVal;
+                    accessCounts[capKey] = (accessCounts[capKey] || 0) + 1;
+                }
+                
+                let penggunaanVal = sub.penggunaan || sub.Penggunaan;
+                if(penggunaanVal) interestCounts[penggunaanVal] = (interestCounts[penggunaanVal] || 0) + 1;
+            });
+
+            // Finalize Averages
+            qAverages = qAverages.map(sum => (sum / total).toFixed(2));
+            const overallAvg = (sumAll / (total * 8)).toFixed(2);
+            document.getElementById('stat-average').innerHTML = `${overallAvg} <span class="text-lg text-gray-400 font-normal">/ 5.0</span>`;
+
+            // Calculate 'Will Use' %
+            let yaCount = interestCounts["Ya"] || 0;
+            const willUsePct = Math.round((yaCount / total) * 100) || 0;
+            document.getElementById('stat-willuse').innerText = `${willUsePct}%`;
+
+            renderBarChart(qAverages);
+            renderPieAccess(accessCounts);
+            renderPieInterest(interestCounts);
+        }
+
+        function renderBarChart(data) {
+            const ctx = document.getElementById('barChart').getContext('2d');
+            if(barChartInst) barChartInst.destroy();
+            
+            barChartInst = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['S1: Akses', 'S2: Peta', 'S3: 360/Interaktif', 'S4: DSKP', 'S5: Kebolehcapaian', 'S6: Minat', 'S7: Sesuai PdP', 'S8: Kongsi'],
+                    datasets: [{
+                        label: 'Purata Skor (Max 5)',
+                        data: data,
+                        backgroundColor: 'rgba(79, 70, 229, 0.7)',
+                        borderColor: 'rgb(79, 70, 229)',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, max: 5 }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        function renderPieAccess(counts) {
+            const ctx = document.getElementById('pieChartAccess').getContext('2d');
+            if(pieAccessInst) pieAccessInst.destroy();
+
+            pieAccessInst = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(counts),
+                    datasets: [{
+                        data: Object.values(counts),
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
+
+        function renderPieInterest(counts) {
+            const ctx = document.getElementById('pieChartInterest').getContext('2d');
+            if(pieInterestInst) pieInterestInst.destroy();
+
+            pieInterestInst = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(counts),
+                    datasets: [{
+                        data: Object.values(counts),
+                        backgroundColor: ['#8b5cf6', '#a78bfa', '#ddd6fe'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
+
+        function refreshCharts() {
+            updateCharts();
+            // Kesan visual klik
+            const btn = event.currentTarget;
+            const icon = btn.querySelector('i');
+            icon.classList.add('fa-spin');
+            setTimeout(() => icon.classList.remove('fa-spin'), 1000);
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            updateCharts();
+        };
+
+    </script>
+</body>
+</html>
