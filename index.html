@@ -44,6 +44,204 @@
         .chart-container::-webkit-scrollbar {
             display: none;
         }
+        .review-avatar {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+        }
+        .review-bubble {
+            position: relative;
+        }
+        .review-bubble::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 18px;
+            width: 16px;
+            height: 16px;
+            background: #f9fafb;
+            transform: rotate(45deg);
+            border-left: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        /* Tema Jejak Pahlawan: biru malam, emas dan cyan */
+        :root {
+            --jp-night: #050a18;
+            --jp-navy: #081126;
+            --jp-panel: #0d1930;
+            --jp-panel-soft: #111f39;
+            --jp-gold: #f6d36f;
+            --jp-gold-deep: #d9a928;
+            --jp-cyan: #22d3ee;
+            --jp-text: #f7f8fb;
+            --jp-muted: #aab7cb;
+            --jp-line: rgba(246, 211, 111, 0.28);
+        }
+        body {
+            color: var(--jp-text);
+            background:
+                radial-gradient(circle at 50% 8%, rgba(24, 49, 87, .7), transparent 36rem),
+                linear-gradient(145deg, #040817 0%, #081126 52%, #050a18 100%);
+            min-height: 100vh;
+        }
+        header.bg-indigo-700 {
+            background: rgba(5, 10, 24, .97) !important;
+            border-bottom: 1px solid var(--jp-line);
+            box-shadow: 0 14px 35px rgba(0, 0, 0, .32);
+        }
+        header h1 i,
+        header .text-indigo-200 {
+            color: var(--jp-gold) !important;
+        }
+        header .bg-indigo-800 {
+            background: rgba(13, 25, 48, .9) !important;
+            border-color: rgba(246, 211, 111, .4) !important;
+        }
+        header + .bg-white {
+            background: rgba(7, 15, 34, .96) !important;
+            border-bottom: 1px solid rgba(148, 163, 184, .16);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .22);
+        }
+        .tab-active {
+            border-bottom-color: var(--jp-gold) !important;
+            color: var(--jp-gold) !important;
+        }
+        [id^="tab-"] {
+            color: var(--jp-muted) !important;
+        }
+        [id^="tab-"].tab-active,
+        [id^="tab-"]:hover {
+            color: var(--jp-gold) !important;
+        }
+        main .bg-white,
+        main .bg-gray-50 {
+            background-color: rgba(13, 25, 48, .96) !important;
+        }
+        main .bg-white {
+            border: 1px solid rgba(246, 211, 111, .17);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, .3) !important;
+        }
+        main .bg-gray-50 {
+            border-color: rgba(148, 163, 184, .16) !important;
+        }
+        main .text-gray-800,
+        main .text-gray-900,
+        main .text-gray-700 {
+            color: var(--jp-text) !important;
+        }
+        main .text-gray-600,
+        main .text-gray-500,
+        main .text-gray-400 {
+            color: var(--jp-muted) !important;
+        }
+        main .border-gray-100,
+        main .border-gray-200,
+        main .border-gray-300,
+        main .border-b,
+        main .border-t {
+            border-color: rgba(148, 163, 184, .18) !important;
+        }
+        main .bg-indigo-50 {
+            background: rgba(34, 211, 238, .07) !important;
+            border-color: rgba(34, 211, 238, .2) !important;
+        }
+        main .text-indigo-800,
+        main .text-indigo-700,
+        main .text-indigo-600,
+        main .text-indigo-500 {
+            color: var(--jp-gold) !important;
+        }
+        main .border-indigo-500 {
+            border-color: var(--jp-gold) !important;
+        }
+        input,
+        textarea {
+            color: var(--jp-text) !important;
+            background: #0a162c !important;
+            border-color: rgba(148, 163, 184, .28) !important;
+        }
+        input::placeholder,
+        textarea::placeholder {
+            color: #78869c !important;
+        }
+        input:focus,
+        textarea:focus {
+            border-color: var(--jp-gold) !important;
+            box-shadow: 0 0 0 3px rgba(246, 211, 111, .14) !important;
+        }
+        input[type="radio"] {
+            accent-color: var(--jp-gold-deep);
+        }
+        label.hover\:bg-gray-50:hover,
+        button.hover\:bg-gray-50:hover {
+            background: rgba(246, 211, 111, .08) !important;
+        }
+        .likert-radio + label {
+            color: var(--jp-muted) !important;
+            background: #0a162c !important;
+            border-color: rgba(148, 163, 184, .32) !important;
+        }
+        .likert-radio:checked + label {
+            color: #07101f !important;
+            background: var(--jp-gold) !important;
+            border-color: var(--jp-gold) !important;
+        }
+        #submitBtn,
+        main button.bg-indigo-600 {
+            color: #07101f !important;
+            background: linear-gradient(135deg, #ffe393, #e6b83d) !important;
+            box-shadow: 0 10px 28px rgba(230, 184, 61, .22) !important;
+        }
+        #submitBtn:hover,
+        main button.bg-indigo-600:hover {
+            background: linear-gradient(135deg, #ffedb1, #f1c956) !important;
+        }
+        #section-reviews > .bg-gradient-to-br {
+            background:
+                radial-gradient(circle at 85% 18%, rgba(34, 211, 238, .13), transparent 18rem),
+                linear-gradient(145deg, #081126, #0d1930) !important;
+            border: 1px solid rgba(246, 211, 111, .38);
+            box-shadow: 0 24px 52px rgba(0, 0, 0, .38) !important;
+        }
+        #section-reviews .text-indigo-200,
+        #section-reviews .text-indigo-100 {
+            color: #d9e2ef !important;
+        }
+        #section-reviews > .bg-gradient-to-br > div > div:first-child > p:first-child {
+            color: var(--jp-gold) !important;
+        }
+        #section-reviews .bg-white\/10 {
+            background: rgba(246, 211, 111, .06) !important;
+            border-color: rgba(246, 211, 111, .22) !important;
+        }
+        .review-avatar {
+            color: #07101f;
+            background: linear-gradient(135deg, #f8de8b, #d9a928);
+            box-shadow: 0 5px 18px rgba(217, 169, 40, .25);
+        }
+        .review-bubble::before {
+            background: #0d1930;
+            border-color: rgba(148, 163, 184, .18);
+        }
+        #load-more-reviews {
+            color: var(--jp-gold) !important;
+            background: rgba(246, 211, 111, .07) !important;
+            border-color: rgba(246, 211, 111, .25) !important;
+        }
+        #load-more-reviews:hover {
+            background: rgba(246, 211, 111, .13) !important;
+        }
+        #section-analytics .border-blue-500,
+        #section-analytics .border-green-500,
+        #section-analytics .border-purple-500 {
+            border-left-color: var(--jp-gold) !important;
+        }
+        #section-analytics .bg-blue-100,
+        #section-analytics .bg-green-100,
+        #section-analytics .bg-purple-100 {
+            background: rgba(34, 211, 238, .09) !important;
+            color: var(--jp-cyan) !important;
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -69,11 +267,14 @@
     <div class="bg-white shadow">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex border-b border-gray-200">
-                <button onclick="switchTab('form')" id="tab-form" class="py-4 px-6 focus:outline-none tab-active hover:text-indigo-600 transition-colors">
-                    <i class="fa-solid fa-clipboard-list mr-2"></i> Isi Maklum Balas
+                <button onclick="switchTab('form')" id="tab-form" class="flex-1 py-4 px-2 md:px-6 whitespace-nowrap text-xs sm:text-base focus:outline-none tab-active hover:text-indigo-600 transition-colors">
+                    <i class="fa-solid fa-clipboard-list mr-1.5 sm:mr-2"></i><span class="sm:hidden">Borang</span><span class="hidden sm:inline">Isi Maklum Balas</span>
                 </button>
-                <button onclick="switchTab('analytics')" id="tab-analytics" class="py-4 px-6 text-gray-500 focus:outline-none hover:text-indigo-600 transition-colors">
-                    <i class="fa-solid fa-chart-pie mr-2"></i> Analisis Data
+                <button onclick="switchTab('analytics')" id="tab-analytics" class="flex-1 py-4 px-2 md:px-6 whitespace-nowrap text-xs sm:text-base text-gray-500 focus:outline-none hover:text-indigo-600 transition-colors">
+                    <i class="fa-solid fa-chart-pie mr-1.5 sm:mr-2"></i><span class="sm:hidden">Analisis</span><span class="hidden sm:inline">Analisis Data</span>
+                </button>
+                <button onclick="switchTab('reviews')" id="tab-reviews" class="flex-1 py-4 px-2 md:px-6 whitespace-nowrap text-xs sm:text-base text-gray-500 focus:outline-none hover:text-indigo-600 transition-colors">
+                    <i class="fa-solid fa-comments mr-1.5 sm:mr-2"></i><span class="sm:hidden">Ulasan</span><span class="hidden sm:inline">Ulasan Guru</span>
                 </button>
             </div>
         </div>
@@ -277,6 +478,53 @@
             </div>
         </section>
 
+        <!-- BAHAGIAN 3: ULASAN GURU -->
+        <section id="section-reviews" class="hidden">
+            <div class="bg-gradient-to-br from-indigo-700 via-indigo-600 to-purple-700 rounded-2xl shadow-lg p-6 md:p-8 text-white mb-8">
+                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+                    <div>
+                        <p class="text-indigo-200 uppercase tracking-widest text-xs font-bold mb-2">Suara pendidik</p>
+                        <h2 class="text-2xl md:text-3xl font-bold">Apa kata guru tentang Jejak Pahlawan?</h2>
+                        <p class="text-indigo-100 mt-2 max-w-2xl">Ulasan sebenar daripada guru dan pegawai pendidikan yang telah mencuba pengalaman WebXR ini.</p>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 text-center min-w-full lg:min-w-[380px]">
+                        <div class="bg-white/10 border border-white/20 rounded-xl px-3 py-4 backdrop-blur-sm">
+                            <p class="text-2xl font-bold">24</p>
+                            <p class="text-[11px] text-indigo-100 mt-1">Responden</p>
+                        </div>
+                        <div class="bg-white/10 border border-white/20 rounded-xl px-3 py-4 backdrop-blur-sm">
+                            <p class="text-2xl font-bold">4.94</p>
+                            <p class="text-[11px] text-indigo-100 mt-1">Purata / 5</p>
+                        </div>
+                        <div class="bg-white/10 border border-white/20 rounded-xl px-3 py-4 backdrop-blur-sm">
+                            <p class="text-2xl font-bold">71%</p>
+                            <p class="text-[11px] text-indigo-100 mt-1">Akan guna</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-md p-4 md:p-7">
+                <div class="flex items-center justify-between border-b border-gray-100 pb-4 mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">Ulasan komuniti pendidikan</h3>
+                        <p class="text-sm text-gray-500 mt-1">Nama, sekolah dan komen dipaparkan tanpa alamat e-mel.</p>
+                    </div>
+                    <span class="hidden sm:inline-flex items-center gap-2 bg-green-50 text-green-700 border border-green-200 px-3 py-1.5 rounded-full text-xs font-semibold">
+                        <i class="fa-solid fa-circle-check"></i> Respons disahkan
+                    </span>
+                </div>
+
+                <div id="teacher-reviews" class="space-y-6" aria-live="polite"></div>
+
+                <div class="text-center mt-8 pt-6 border-t border-gray-100">
+                    <button id="load-more-reviews" onclick="loadMoreReviews()" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold px-6 py-3 rounded-full transition-colors border border-indigo-100">
+                        <i class="fa-solid fa-comments mr-2"></i> Lihat lebih banyak ulasan
+                    </button>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <script>
@@ -289,6 +537,102 @@
             { q1:5, q2:5, q3:5, q4:4, q5:5, q6:5, q7:4, q8:5, capaian: "Telefon + Cardboard", penggunaan: "Mungkin" },
             { q1:3, q2:4, q3:4, q4:4, q5:2, q6:4, q7:3, q8:4, capaian: "Komputer/LCD", penggunaan: "Mungkin" }
         ];
+
+        // Ulasan sebenar daripada Google Sheet. E-mel tidak disimpan atau dipaparkan di laman.
+        const teacherReviews = [
+            { name: "Nazira", role: "Guru Sains", school: "SK Sungai Raya", date: "18 Ogos 2026", rating: 5, text: "Sangat membantu dalam PdPc dan dapat menarik minat murid untuk belajar serta meneroka ilmu." },
+            { name: "Nursharmimi Ameera binti Sanadi", role: "Guru Sejarah Tahun 4", school: "SK (2) Petaling Jaya", date: "18 Ogos 2026", rating: 5, text: "Menunjukkan situasi sebenar peristiwa sejarah kepada murid.", suggestion: "Tambah senario supaya murid dapat menggunakan VR untuk belajar dengan lebih lama." },
+            { name: "Husna Mahirah binti Hasan", role: "Ketua Panitia Sejarah / Guru Sejarah", school: "SK Padang Jawa", date: "17 Ogos 2026", rating: 5, text: "Pengalaman pembelajaran yang interaktif menjadikan Sejarah lebih menarik. Murid seolah-olah berada di tempat bersejarah dan dapat memahami peristiwa dengan lebih jelas.", suggestion: "Sediakan latihan guru, kandungan yang selaras dengan DSKP dan kemudahan teknologi yang mencukupi." },
+            { name: "Siti Anis Athirah Bux", role: "Guru Bahasa Inggeris", school: "SK Taman Megah", date: "17 Ogos 2026", rating: 5, text: "Produk mudah dihasilkan oleh guru dengan kos yang sangat rendah.", suggestion: "Perluaskan inovasi WebXR ini kepada semua topik Sejarah kerana sangat menarik." },
+            { name: "Ahmad Muhaimin bin Abdu Rahim", role: "PPP DG10", school: "SK Methodist PJ", date: "17 Ogos 2026", rating: 5, text: "Menarik perhatian murid. Murid berasa sangat teruja dan bersemangat untuk meneroka!" },
+            { name: "Nurul Ain Zubaidah binti Mohamad Khalid", role: "Guru Sejarah Tahun 4", school: "SK Sungai Tungku", date: "17 Ogos 2026", rating: 5, text: "Bersifat interaktif dan berpusatkan murid." },
+            { name: "Manisah binti Muhamad Shukur", role: "Guru Bahasa Inggeris Tahun 1", school: "SK Pengkalan Tentera Darat", date: "17 Ogos 2026", rating: 5, text: "Murid seperti merasai sendiri keadaan sebenar sejarah silam." },
+            { name: "Ainur Ruzainah", role: "Guru", school: "SK Satu Sultan Alam Shah", date: "16 Ogos 2026", rating: 4.9, text: "Menarik dan menjadikan mata pelajaran Sejarah sangat menyeronokkan.", suggestion: "Gunakan bunyi runut bertemakan tradisional." },
+            { name: "Nur Ain binti Husni", role: "Guru Pendidikan Khas", school: "SK Satu Sultan Alam Shah", date: "10 Ogos 2026", rating: 5, text: "Sangat menarik untuk tarikan murid. Elemen muzik membantu mewujudkan suasana pada zaman itu.", suggestion: "Tambahkan set alat VR supaya lebih ramai murid dapat menyertai pada satu masa." },
+            { name: "Sadatul Naziriah", role: "Guru PPKI", school: "SK Satu Sultan Alam Shah", date: "10 Ogos 2026", rating: 5, text: "Membantu murid yang kurang minat membaca nota Sejarah untuk memahami fakta dengan lebih mudah.", suggestion: "Sediakan versi bahasa Inggeris." },
+            { name: "Mohd Khomeini", role: "Guru Pendidikan Islam", school: "SK Satu Sultan Alam Shah", date: "10 Ogos 2026", rating: 5, text: "Pembelajaran alaf baharu yang menarik dan boleh disesuaikan dengan subjek lain." },
+            { name: "Nur Syaza binti Isamudin", role: "Guru Pendidikan Khas", school: "SK Satu Sultan Alam Shah", date: "10 Ogos 2026", rating: 4.9, text: "Produk ini menggunakan teknologi terkini yang dapat menarik minat murid." },
+            { name: "Nur Fahimah", role: "Guru PPKI", school: "SK Satu Sultan Alam Shah", date: "10 Ogos 2026", rating: 5, text: "Menarik dan membantu murid fokus dalam pembelajaran." },
+            { name: "Khairiah", role: "Guru Bahasa Melayu", school: "SK Satu Sultan Alam Shah", date: "10 Ogos 2026", rating: 5, text: "Sangat menarik dan interaktif serta dapat meliputi pelbagai jenis kecerdasan murid di dalam kelas." },
+            { name: "Siti Zubaidah Musa", role: "Guru Matematik Tahun 2", school: "SK Bandar Maharani", date: "17 Ogos 2026", rating: 5, text: "Paparan yang jelas dan menarik.", suggestion: "Perluaskan kepada topik yang lain." },
+            { name: "Nurul Nadia bt. Zainuddin", role: "Guru Sejarah Tahun 4", school: "SK Senaling", date: "17 Ogos 2026", rating: 5, text: "Menarik minat murid dan mudah digunakan." }
+        ];
+
+        let visibleReviewCount = 6;
+
+        function getInitials(name) {
+            return name.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase();
+        }
+
+        function renderTeacherReviews() {
+            const container = document.getElementById('teacher-reviews');
+            if (!container) return;
+            container.innerHTML = '';
+
+            teacherReviews.slice(0, visibleReviewCount).forEach(review => {
+                const item = document.createElement('article');
+                item.className = 'flex items-start gap-3 md:gap-4';
+
+                const avatar = document.createElement('div');
+                avatar.className = 'review-avatar relative z-10 flex-shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full text-white flex items-center justify-center text-sm font-bold';
+                avatar.textContent = getInitials(review.name);
+
+                const bubble = document.createElement('div');
+                bubble.className = 'review-bubble flex-1 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-4 md:px-5';
+
+                const header = document.createElement('div');
+                header.className = 'flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2';
+
+                const identity = document.createElement('div');
+                const name = document.createElement('h4');
+                name.className = 'font-bold text-gray-900 leading-tight';
+                name.textContent = review.name;
+                const meta = document.createElement('p');
+                meta.className = 'text-xs text-gray-500 mt-1';
+                meta.textContent = `${review.role} · ${review.school}`;
+                identity.append(name, meta);
+
+                const rating = document.createElement('div');
+                rating.className = 'flex items-center gap-2 flex-shrink-0';
+                const stars = document.createElement('span');
+                stars.className = 'text-amber-400 text-xs tracking-tight';
+                stars.setAttribute('aria-label', `${review.rating} daripada 5 bintang`);
+                stars.innerHTML = '<i class="fa-solid fa-star"></i>'.repeat(5);
+                const date = document.createElement('span');
+                date.className = 'text-[11px] text-gray-400';
+                date.textContent = review.date;
+                rating.append(stars, date);
+                header.append(identity, rating);
+
+                const comment = document.createElement('p');
+                comment.className = 'text-sm md:text-[15px] text-gray-700 leading-relaxed mt-3';
+                comment.textContent = review.text;
+                bubble.append(header, comment);
+
+                if (review.suggestion) {
+                    const suggestion = document.createElement('div');
+                    suggestion.className = 'mt-3 bg-indigo-50 border border-indigo-100 text-indigo-800 rounded-xl px-3 py-2.5 text-xs md:text-sm';
+                    suggestion.textContent = `Cadangan: ${review.suggestion}`;
+                    bubble.appendChild(suggestion);
+                }
+
+                const verified = document.createElement('p');
+                verified.className = 'text-[11px] text-gray-400 mt-3 font-medium';
+                verified.innerHTML = '<i class="fa-solid fa-circle-check text-green-500 mr-1"></i> Respons borang guru';
+                bubble.appendChild(verified);
+
+                item.append(avatar, bubble);
+                container.appendChild(item);
+            });
+
+            const button = document.getElementById('load-more-reviews');
+            if (button) button.classList.toggle('hidden', visibleReviewCount >= teacherReviews.length);
+        }
+
+        function loadMoreReviews() {
+            visibleReviewCount = Math.min(visibleReviewCount + 5, teacherReviews.length);
+            renderTeacherReviews();
+        }
 
         // Soalan Likert
         const likertQuestions = [
@@ -336,12 +680,15 @@
             // Sembunyi semua
             document.getElementById('section-form').classList.add('hidden');
             document.getElementById('section-analytics').classList.add('hidden');
+            document.getElementById('section-reviews').classList.add('hidden');
             
             // Reset butang aktif
             document.getElementById('tab-form').classList.remove('tab-active', 'text-indigo-600');
             document.getElementById('tab-form').classList.add('text-gray-500');
             document.getElementById('tab-analytics').classList.remove('tab-active', 'text-indigo-600');
             document.getElementById('tab-analytics').classList.add('text-gray-500');
+            document.getElementById('tab-reviews').classList.remove('tab-active', 'text-indigo-600');
+            document.getElementById('tab-reviews').classList.add('text-gray-500');
             
             // Tunjuk yang dipilih
             document.getElementById('section-' + tabId).classList.remove('hidden');
@@ -350,6 +697,9 @@
 
             if(tabId === 'analytics') {
                 updateCharts();
+            }
+            if(tabId === 'reviews') {
+                renderTeacherReviews();
             }
         }
 
@@ -515,8 +865,8 @@
                     datasets: [{
                         label: 'Purata Skor (Max 5)',
                         data: data,
-                        backgroundColor: 'rgba(79, 70, 229, 0.7)',
-                        borderColor: 'rgb(79, 70, 229)',
+                        backgroundColor: 'rgba(246, 211, 111, 0.78)',
+                        borderColor: '#f6d36f',
                         borderWidth: 1,
                         borderRadius: 4
                     }]
@@ -525,7 +875,16 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        y: { beginAtZero: true, max: 5 }
+                        x: {
+                            ticks: { color: '#aab7cb' },
+                            grid: { display: false }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 5,
+                            ticks: { color: '#aab7cb' },
+                            grid: { color: 'rgba(170, 183, 203, 0.14)' }
+                        }
                     },
                     plugins: {
                         legend: { display: false }
@@ -544,14 +903,14 @@
                     labels: Object.keys(counts),
                     datasets: [{
                         data: Object.values(counts),
-                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b'],
+                        backgroundColor: ['#22d3ee', '#f6d36f', '#2f6ea8'],
                         borderWidth: 0
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } }
+                    plugins: { legend: { position: 'bottom', labels: { color: '#d9e2ef' } } }
                 }
             });
         }
@@ -566,14 +925,14 @@
                     labels: Object.keys(counts),
                     datasets: [{
                         data: Object.values(counts),
-                        backgroundColor: ['#8b5cf6', '#a78bfa', '#ddd6fe'],
+                        backgroundColor: ['#f6d36f', '#22d3ee', '#35506f'],
                         borderWidth: 0
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } }
+                    plugins: { legend: { position: 'bottom', labels: { color: '#d9e2ef' } } }
                 }
             });
         }
@@ -590,6 +949,7 @@
         // Initialize on load
         window.onload = function() {
             updateCharts();
+            renderTeacherReviews();
         };
 
     </script>
