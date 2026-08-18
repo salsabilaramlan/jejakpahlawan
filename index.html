@@ -74,7 +74,8 @@
             --jp-gold-deep: #d9a928;
             --jp-cyan: #22d3ee;
             --jp-text: #f7f8fb;
-            --jp-muted: #aab7cb;
+            --jp-muted: #d7e1ef;
+            --jp-subtle: #c5d1e2;
             --jp-line: rgba(246, 211, 111, 0.28);
         }
         body {
@@ -107,7 +108,8 @@
             color: var(--jp-gold) !important;
         }
         [id^="tab-"] {
-            color: var(--jp-muted) !important;
+            color: #e3ebf6 !important;
+            font-weight: 600;
         }
         [id^="tab-"].tab-active,
         [id^="tab-"]:hover {
@@ -162,7 +164,8 @@
         }
         input::placeholder,
         textarea::placeholder {
-            color: #78869c !important;
+            color: #c5d1e2 !important;
+            opacity: 1;
         }
         input:focus,
         textarea:focus {
@@ -177,9 +180,9 @@
             background: rgba(246, 211, 111, .08) !important;
         }
         .likert-radio + label {
-            color: var(--jp-muted) !important;
+            color: #edf3fb !important;
             background: #0a162c !important;
-            border-color: rgba(148, 163, 184, .32) !important;
+            border-color: rgba(215, 225, 239, .55) !important;
         }
         .likert-radio:checked + label {
             color: #07101f !important;
@@ -205,7 +208,7 @@
         }
         #section-reviews .text-indigo-200,
         #section-reviews .text-indigo-100 {
-            color: #d9e2ef !important;
+            color: #edf3fb !important;
         }
         #section-reviews > .bg-gradient-to-br > div > div:first-child > p:first-child {
             color: var(--jp-gold) !important;
@@ -222,6 +225,24 @@
         .review-bubble::before {
             background: #0d1930;
             border-color: rgba(148, 163, 184, .18);
+        }
+        .review-bubble h4,
+        .review-bubble > p.text-gray-700 {
+            color: #ffffff !important;
+        }
+        .review-bubble .text-gray-500,
+        .review-bubble .text-gray-400 {
+            color: #d7e1ef !important;
+        }
+        .review-bubble .bg-indigo-50 {
+            color: #fff1bd !important;
+            background: rgba(246, 211, 111, .11) !important;
+            border-color: rgba(246, 211, 111, .42) !important;
+        }
+        #section-reviews .bg-green-50 {
+            color: #092117 !important;
+            background: #bbf7d0 !important;
+            border-color: #4ade80 !important;
         }
         #load-more-reviews {
             color: var(--jp-gold) !important;
@@ -876,14 +897,14 @@
                     maintainAspectRatio: false,
                     scales: {
                         x: {
-                            ticks: { color: '#aab7cb' },
+                            ticks: { color: '#d7e1ef' },
                             grid: { display: false }
                         },
                         y: {
                             beginAtZero: true,
                             max: 5,
-                            ticks: { color: '#aab7cb' },
-                            grid: { color: 'rgba(170, 183, 203, 0.14)' }
+                            ticks: { color: '#d7e1ef' },
+                            grid: { color: 'rgba(215, 225, 239, 0.2)' }
                         }
                     },
                     plugins: {
@@ -910,7 +931,7 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { color: '#d9e2ef' } } }
+                    plugins: { legend: { position: 'bottom', labels: { color: '#edf3fb' } } }
                 }
             });
         }
@@ -932,7 +953,7 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { color: '#d9e2ef' } } }
+                    plugins: { legend: { position: 'bottom', labels: { color: '#edf3fb' } } }
                 }
             });
         }
